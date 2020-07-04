@@ -99,7 +99,7 @@ psutil==5.7.0
 ptyprocess==0.6.0
 pydeck==0.4.0b1
 Pygments==2.6.1
-pynvx==1.0.0
+# pynvx==1.0.0
 pyparsing==2.4.7
 pyrsistent==0.16.0
 PySocks==1.7.1
@@ -110,7 +110,7 @@ pyzmq==18.1.1
 raven==6.7.0
 requests==2.23.0
 requests-toolbelt==0.9.1
-rhea==0.5.4
+rhea==0.5.5
 s3transfer==0.3.3
 scikit-learn==0.22.1
 scipy==1.4.1
@@ -125,7 +125,6 @@ srsly==1.0.2
 streamlit==0.61.0
 tabulate==0.8.2
 tblib==1.6.0
-tensorboard==1.15.0
 tensorflow==1.15.2
 tensorflow-estimator==1.15.1
 termcolor==1.1.0
@@ -134,8 +133,7 @@ testpath==0.4.4
 thinc==7.4.0
 toml==0.10.1
 toolz==0.10.0
-torch==1.5.0
-tornado==6.0.4
+tornado==5.0
 tqdm==4.46.0
 traitlets==4.3.3
 typing-extensions==3.7.4.1
