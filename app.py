@@ -5,7 +5,7 @@ from tensorflow.keras import Model
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications import MobileNetV2
+from tensorflow.keras.applications import DenseNet121
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.layers import (
     Flatten,
@@ -16,10 +16,10 @@ from tensorflow.keras.layers import (
 import streamlit as st
 
 CLASS_DICT = {
-    0: 'd24',
-    1: 'jin feng',
-    2: 'mao shan wang',
-    3: 'red prawn'
+    0: 'D24',
+    1: 'JIN FENG',
+    2: 'MAO SHAN WANG',
+    3: 'RED PRAWN'
 }
 
 
@@ -39,7 +39,7 @@ def load_img(input_image, shape):
 
 
 def load_model(weights, shape):
-    model = MobileNetV2(
+    model = DenseNet121(
         input_shape=(shape, shape, 3),
         include_top=False,
         weights=None
@@ -64,19 +64,21 @@ def load_model(weights, shape):
     return model
 
 
-"# Ah Beng David's Durian Classifier"
+"# Ah Chong's Durian Classifier"
 
-"Oi lao ban, tell me what durian you want to classify"
+"### Oi 老板, tell me what durian you want to jiak"
 
-uploaded_img = st.file_uploader(label='Select a file:')
+result = st.empty()
+uploaded_img = st.file_uploader(
+    label='eh what your durian looks like ah:')
 if uploaded_img:
     st.image(uploaded_img, caption="your sexy durian pic",
              width=350)
+    result.info("eh 老板, wait ah 我在 inspect 你的 liu lian..., ")
     model = load_model(
-        "model-weights/durian_classifier_mobilenetv2_20epochs_batch8_sgd0001.h5",
-        224
+        "model-weights/durian_classifier_densenet121_20epochs_batch8_sgd0001.h5", 224
     )
     pred_img = load_img(uploaded_img, 224)
     pred = CLASS_DICT[np.argmax(model.predict(pred_img))]
 
-    "This is obviously a " + pred
+    result.success("This is obviously my favourite " + pred + "!!!")
