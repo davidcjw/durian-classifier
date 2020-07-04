@@ -46,7 +46,6 @@ h5py==2.10.0
 HeapDict==1.0.1
 hestia==0.3.1
 idna==2.9
-implicit==0.4.2
 importlib-metadata==1.6.1
 ipykernel==5.1.4
 ipython==7.13.0
@@ -136,7 +135,6 @@ thinc==7.4.0
 toml==0.10.1
 toolz==0.10.0
 torch==1.5.0
-torchvision==0.6.0a0+82fd1c8
 tornado==6.0.4
 tqdm==4.46.0
 traitlets==4.3.3
