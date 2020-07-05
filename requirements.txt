@@ -103,8 +103,7 @@ srsly==1.0.2
 streamlit==0.61.0
 tabulate==0.8.2
 tblib==1.6.0
-tensorflow==1.15.2
-tensorflow-estimator==1.15.1
+tensorflow==2.2.0
 termcolor==1.1.0
 terminado==0.8.3
 testpath==0.4.4
@@ -117,7 +116,6 @@ traitlets==4.3.3
 typing-extensions==3.7.4.1
 tzlocal==2.1
 Unipath==1.1
-urllib3==1.25.9
 validators==0.15.0
 wasabi==0.6.0
 watchdog==0.10.2

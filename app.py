@@ -1,26 +1,24 @@
 import numpy as np
 
 from PIL import Image
-from tensorflow.keras import Model
-from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications import DenseNet121
-from tensorflow.keras.regularizers import l2
-from tensorflow.keras.layers import (
-    Flatten,
-    Dense,
-    AveragePooling2D,
-    Dropout
-)
 import streamlit as st
 
+PATH = "model-weights/"
+WEIGHTS = "durian_classifier_densenet121_20epochs_batch8_sgd0001.h5"
 CLASS_DICT = {
     0: 'D24',
     1: 'JIN FENG',
     2: 'MAO SHAN WANG',
     3: 'RED PRAWN'
 }
+
+
+@st.cache(allow_output_mutation=True)
+def load_own_model(weights):
+    return load_model(weights)
 
 
 def load_img(input_image, shape):
@@ -38,47 +36,21 @@ def load_img(input_image, shape):
     return np.reshape(img, [1, shape, shape, 3])/255
 
 
-def load_model(weights, shape):
-    model = DenseNet121(
-        input_shape=(shape, shape, 3),
-        include_top=False,
-        weights=None
-    )
+if __name__ == "__main__":
+    st.image("assets/unsplash-durian.jpg", use_column_width=True)
+    "# Ah Chong's Durian Classifier"
 
-    x = model.output
-    x = AveragePooling2D(pool_size=(2, 2))(x)
-    x = Dense(32, activation='relu')(x)
-    x = Dropout(0.1)(x)
-    x = Flatten()(x)
-    x = Dense(4, activation='softmax',
-              kernel_regularizer=l2(.0005))(x)
+    "### Oi 老板, tell me what durian you want to jiak"
 
-    model = Model(inputs=model.inputs, outputs=x)
+    result = st.empty()
+    uploaded_img = st.file_uploader(
+        label='eh what your durian looks like ah:')
+    if uploaded_img:
+        st.image(uploaded_img, caption="your sexy durian pic",
+                 width=350)
+        result.info("eh wait ah 我在 inspect 你的 liu lian..., ")
+        model = load_own_model(PATH + WEIGHTS)
+        pred_img = load_img(uploaded_img, 224)
+        pred = CLASS_DICT[np.argmax(model.predict(pred_img))]
 
-    optimizer = SGD(lr=1e-4, momentum=.9)
-    model.load_weights(weights)
-    model.compile(loss='categorical_crossentropy',
-                  optimizer=optimizer,
-                  metrics=['accuracy'])
-
-    return model
-
-
-"# Ah Chong's Durian Classifier"
-
-"### Oi 老板, tell me what durian you want to jiak"
-
-result = st.empty()
-uploaded_img = st.file_uploader(
-    label='eh what your durian looks like ah:')
-if uploaded_img:
-    st.image(uploaded_img, caption="your sexy durian pic",
-             width=350)
-    result.info("eh 老板, wait ah 我在 inspect 你的 liu lian..., ")
-    model = load_model(
-        "model-weights/durian_classifier_densenet121_20epochs_batch8_sgd0001.h5", 224
-    )
-    pred_img = load_img(uploaded_img, 224)
-    pred = CLASS_DICT[np.argmax(model.predict(pred_img))]
-
-    result.success("This is obviously my favourite " + pred + "!!!")
+        result.success("Wah swee la, is my favourite " + pred + "!!!")
